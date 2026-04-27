@@ -1,0 +1,42 @@
+# Binaries and Executables
+*.exe
+*.o
+*.obj
+*.out
+*.app
+*.bin
+
+# IDEs and Editors
+.vscode/
+.idea/
+*.swp
+*.swo
+tempCodeRunnerFile*
+
+# OS specific
+Thumbs.db
+Desktop.ini
+.DS_Store
+
+# Node.js
+node_modules/
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+
+# Python
+__pycache__/
+*.pyc
+*.pyo
+*.pyd
+.venv/
+env/
+Venv/
+
+# Environment variables
+.env
+.env.local
+.env.*.local
+
+# Logs
+*.log
