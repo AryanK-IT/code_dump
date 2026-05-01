@@ -1,4 +1,6 @@
 #include <bits/stdc++.h>
+
+#include <map>
 using namespace std;
 
 void explainPair() {
@@ -115,7 +117,7 @@ void explainList() {
     ls.push_back(2);     // [2]
     ls.emplace_back(4);  //[2,4]
     ls.push_front(5);    // [5,2,4]this method is very cheap in terms of time complexity
-    ls.emplace_front();
+    ls.emplace_front(10);
 }
 
 void explainStack() {
@@ -184,19 +186,19 @@ void explainSet() {
     st.insert(4);
     st.insert(3);  // [1,2,3,4]
 
-    auto it = st.find(3);  // the find method returns an iterator that points to 3 in the set
-    auto it = st.find(6);  // here because 6 does not exist so the iterator points to the end of the list or st.end()
+    auto it1 = st.find(3);  // the find method returns an iterator that points to 3 in the set
+    auto it2 = st.find(6);  // here because 6 does not exist so the iterator points to the end of the list or st.end()
 
     st.erase(4);  // erases 4 from the set and takes logarithimic time
 
     int cnt = st.count(1);
 
-    auto it1 = st.find(2);
-    auto it2 = st.find(4);
+    auto it3 = st.find(2);
+    auto it4 = st.find(4);
     st.erase(it1, it2);
 
-    auto it = st.lower_bound(2);
-    auto it = st.upper_bound(3);
+    auto it5 = st.lower_bound(2);
+    auto it6 = st.upper_bound(3);
 }
 
 void explainMultiset() {
@@ -225,13 +227,99 @@ void explainUnorderedSet() {
 }
 
 void explainMap() {
-    map<int, int> mpp;
-    map<int, pair<int,int>> map;
+    // unique keys are stored and are ordered
+    map<int, int> mpp1;
+    map<int, pair<int, int>> mpp2;
+    map<pair<int, int>, int> mpp;
+
+    // --- Inserting into a map with pair keys ---
+    mpp[{1, 0}] = 2;
+    mpp.emplace(make_pair(3, 1), 5);
+    mpp.insert({{2, 4}, 8});
+    mpp[{2, 4}] = 10;  // This overwrites the 8 with 10 for the key {2,4}
+
+    cout << "Printing mpp:\n";
+    for (auto it : mpp) {
+        cout << it.first.first << " " << it.first.second << " " << it.second << "\n";
+    }
+
+    // --- Working with a map with integer keys (mpp1) ---
+    mpp1[1] = 100;  // Adding some dummy data to mpp1 so we can search it
+    mpp1[3] = 300;
+    mpp1[5] = 500;
+
+    cout << "\nAccessing mpp1:\n";
+    cout << mpp1[1] << "\n";  // Prints 100
+    cout << mpp1[5] << "\n";  // Prints 500
+
+    // Using .find()
+    auto it = mpp1.find(3);
+    if (it != mpp1.end()) {          // Always good practice to check if it was actually found!
+        cout << it->second << "\n";  // Correct syntax: it->second
+    }
+
+    auto it2 = mpp1.find(5);  // Points to the element with key 5
+
+    // Using lower_bound and upper_bound
+    auto it3 = mpp1.lower_bound(2);
+    auto it4 = mpp1.upper_bound(3);
+
+    // erase, swap, size, empty are the same as above
 }
 
-void edxplainMutliMap() {
+void explainMultiMap() {
+    // evrything is same as map but the only difference here is that it can store multiple keys
+    // only mpp[key] cannot be used here
 }
-int main() { explainQueue(); }
+
+void explainUnorderedMap() {
+    // same as set and unordered_set difference
+    //  even here the time complexity will be O(1)
+}
+
+bool comp(pair<int, int> p1, pair<int, int> p2) {
+    if (p1.second < p2.second) return true;
+    if (p1.second > p2.second) return false;
+    // they are same
+    if (p1.first > p2.first) return true;
+    return false;
+}
+
+void explainExtra() {
+    int a[] = {1, 5, 3, 2};
+    vector<int> v = {6, 2, 7, 3, 9, 5};
+
+    sort(a, a + 4);
+    sort(v.begin(), v.end());  // for vectors
+    sort(a + 2, a + 4);
+    sort(a, a + 4, greater<int>());  // sorts it in descending order using the comparator (greater<int>)
+
+    pair<int, int> aa[] = {{1, 2}, {2, 1}, {4, 1}};
+    // sort it according to second element
+    // if second element is same,then sort
+    // it according to first element but in descending
+
+    sort(aa, aa + 3, comp);  // here comp is a custom comparator
+
+    int num = 7;                        // is  111 in binary
+    int cnt = __builtin_popcount(num);  // returns number of set bits, which is 3 in this case
+
+    long long num2 = 815462347231328;
+    int cnt2 = __builtin_popcountll(num2);
+
+    cout << cnt << endl;
+    cout << cnt2 << endl;
+
+    string s = "123";
+    do {
+        cout << s << endl;
+    } while (next_permutation(s.begin(), s.end()));  // prints all permutations of a string, but only if starts from the first permutation in textbook order
+
+    int max = *max_element(a, a + 4);  // gives address of maximum element
+    int max = *min_element(a, a + 4);  // gives address of minimum element
+}
+
+int main() { explainExtra(); }
 
 // cpp stl is divided into 4 parts
 // Algorithms
